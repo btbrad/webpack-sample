@@ -4,5 +4,23 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
-  }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    hot: true,
+    port: '8080',
+    inline: true,
+    open: true,
+    overlay: true,
+    proxy: {
+      '/api': {
+        target: '',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  },
+  devtool: 'source-map'
 }
