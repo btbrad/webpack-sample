@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -18,12 +18,25 @@ module.exports = {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader']
+          use: ['css-loader'],
+          publicPath:'../'
         })
       },
       {
         test: /\.(scss|sass)$/,
         use: ['style-loader','css-loader','sass-loader']
+      }, 
+      {
+        test: /\.(jpg|png|svg|gif)$/,
+        use: [
+          { 
+            loader: 'url-loader',
+            options: {
+              limit: 1000,
+              outputPath: 'images'
+            }
+          }
+        ]
       }
     ]
   },
