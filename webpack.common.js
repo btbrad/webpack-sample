@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[hash:8].js',
   },
   module: {
     rules: [
@@ -24,7 +24,10 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        use: ['style-loader','css-loader','sass-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader','postcss-loader', 'sass-loader']
+        })
       }, 
       {
         test: /\.(jpg|png|svg|gif)$/,
@@ -46,6 +49,6 @@ module.exports = {
       template: path.join(__dirname, '/src/index.html')
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('css/index.css')
+    new ExtractTextPlugin('css/index.css'),
   ]
 }
