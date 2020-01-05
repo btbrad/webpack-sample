@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 import './css/index.css'
 import './scss/test.scss'
 

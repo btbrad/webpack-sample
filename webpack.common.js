@@ -35,11 +35,70 @@ module.exports = {
           { 
             loader: 'url-loader',
             options: {
-              limit: 1000,
-              outputPath: 'images'
+              limit: 10240,
+              fallback: {
+                loader: 'file-loader',
+                options: {
+                  name: 'images/[name].[hash:8].[ext]'
+                }
+              }
             }
           }
         ]
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10240,
+              fallback: {
+                loader: 'file-loader',
+                options: {
+                  name: 'media/[name].[hash:8].[ext]'
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10240,
+              fallback: {
+                loader: 'file-loader',
+                options: {
+                  name: 'fonts/[name].[hash:8].[ext]'
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        },
+        exclude: /node_modules/
+      },
+      {
+        test:/\.js$/,
+        use:{
+          loader:'babel-loader',
+          options:{
+            presets:['@babel/preset-env']
+          }
+        },
+        exclude:/node_modules/
       }
     ]
   },
@@ -49,6 +108,8 @@ module.exports = {
       template: path.join(__dirname, '/src/index.html')
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('css/index.css'),
+    new ExtractTextPlugin({
+      filename: 'css/[name].[hash:8].css'
+    }),
   ]
 }
