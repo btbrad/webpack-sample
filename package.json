@@ -4,8 +4,8 @@
   "description": "a very simple webpack demo",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "dev": "webpack-dev-server --open --config webpack.dev.js"
+    "build": "webpack --config webpack.prod.js --mode production",
+    "dev": "webpack-dev-server --open --config webpack.dev.js --mode development"
   },
   "author": "",
   "license": "ISC",
